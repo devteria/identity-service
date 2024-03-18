@@ -1,16 +1,19 @@
 package com.devteria.identityservice.exception;
 
 import com.devteria.identityservice.dto.request.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception){
+        log.error("Exception: ", exception);
         ApiResponse apiResponse = new ApiResponse();
 
         apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
