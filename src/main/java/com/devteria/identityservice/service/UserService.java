@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -76,8 +75,7 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    // @PreAuthorize("hasRole('ADMIN')")
-    @PreAuthorize("hasAuthority('APPROVE_POST')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsers(){
         log.info("In method get Users");
         return userRepository.findAll().stream()
