@@ -144,7 +144,10 @@
 				</executions>
 				<configuration>
 					<excludes>
-<!--						<exclude>com/devteria/identityservice/dto/**</exclude>-->
+						<exclude>com/devteria/identityservice/dto/**</exclude>
+						<exclude>com/devteria/identityservice/entity/**</exclude>
+						<exclude>com/devteria/identityservice/mapper/**</exclude>
+						<exclude>com/devteria/identityservice/configuration/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
