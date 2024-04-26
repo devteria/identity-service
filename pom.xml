@@ -68,18 +68,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.diffplug.spotless</groupId>
-			<artifactId>spotless-lib</artifactId>
-			<version>${spotless.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.diffplug.spotless</groupId>
-			<artifactId>spotless-lib-extra</artifactId>
-			<version>${spotless.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
@@ -181,7 +169,7 @@
 						<palantirJavaFormat/>
 						<importOrder>
 							<!-- Specify either order or file, but not both -->
-							<order>java,javax,org,com,com.diffplug,</order>
+							<order>java,jakarta,org,com,com.diffplug,</order>
 						</importOrder>
 					</java>
 				</configuration>
