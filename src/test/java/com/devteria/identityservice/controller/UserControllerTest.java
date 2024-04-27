@@ -1,12 +1,7 @@
 package com.devteria.identityservice.controller;
 
-import com.devteria.identityservice.dto.request.UserCreationRequest;
-import com.devteria.identityservice.dto.response.UserResponse;
-import com.devteria.identityservice.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -21,7 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDate;
+import com.devteria.identityservice.dto.request.UserCreationRequest;
+import com.devteria.identityservice.dto.response.UserResponse;
+import com.devteria.identityservice.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
@@ -40,7 +41,7 @@ public class UserControllerTest {
     private LocalDate dob;
 
     @BeforeEach
-    void initData(){
+    void initData() {
         dob = LocalDate.of(1990, 1, 1);
 
         request = UserCreationRequest.builder()
@@ -68,25 +69,19 @@ public class UserControllerTest {
         objectMapper.registerModule(new JavaTimeModule());
         String content = objectMapper.writeValueAsString(request);
 
-        Mockito.when(userService.createUser(ArgumentMatchers.any()))
-                .thenReturn(userResponse);
+        Mockito.when(userService.createUser(ArgumentMatchers.any())).thenReturn(userResponse);
 
         // WHEN, THEN
-        mockMvc.perform(MockMvcRequestBuilders
-                .post("/users")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(content))
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("code")
-                        .value(1000))
-                .andExpect(MockMvcResultMatchers.jsonPath("result.id")
-                        .value("cf0600f538b3")
-
-        );
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value(1000))
+                .andExpect(MockMvcResultMatchers.jsonPath("result.id").value("cf0600f538b3"));
     }
 
     @Test
-        //
+    //
     void createUser_usernameInvalid_fail() throws Exception {
         // GIVEN
         request.setUsername("joh");
@@ -95,15 +90,11 @@ public class UserControllerTest {
         String content = objectMapper.writeValueAsString(request);
 
         // WHEN, THEN
-        mockMvc.perform(MockMvcRequestBuilders
-                        .post("/users")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("code")
-                        .value(1003))
-                .andExpect(MockMvcResultMatchers.jsonPath("message")
-                        .value("Username must be at least 4 characters")
-                );
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value(1003))
+                .andExpect(MockMvcResultMatchers.jsonPath("message").value("Username must be at least 4 characters"));
     }
 }

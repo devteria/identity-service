@@ -1,12 +1,13 @@
 package com.devteria.identityservice.entity;
 
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -18,6 +19,7 @@ import java.util.Set;
 public class Role {
     @Id
     String name;
+
     String description;
 
     @ManyToMany
