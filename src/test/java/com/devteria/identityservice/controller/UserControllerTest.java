@@ -18,42 +18,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Testcontainers;
-
-import com.devteria.identityservice.dto.request.UserCreationRequest;
-import com.devteria.identityservice.dto.response.UserResponse;
-import com.devteria.identityservice.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/test.properties")
-@Testcontainers
-public class UserControllerTest {
-    static final MySQLContainer MY_SQL_CONTAINER;
-
-    static {
-        MY_SQL_CONTAINER = new MySQLContainer("mysql:latest");
-        MY_SQL_CONTAINER.start();
-    }
-
-    @DynamicPropertySource
-    static void configureTestProperties(DynamicPropertyRegistry registry){
-        registry.add("spring.datasource.url",() -> MY_SQL_CONTAINER.getJdbcUrl());
-        registry.add("spring.datasource.username",() -> MY_SQL_CONTAINER.getUsername());
-        registry.add("spring.datasource.password",() -> MY_SQL_CONTAINER.getPassword());
-        registry.add("spring.jpa.hibernate.ddl-auto",() -> "create");
-    }
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
