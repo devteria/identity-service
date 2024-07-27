@@ -22,7 +22,7 @@ This microservice is responsible for:
 
 ## Docker guideline
 ### Create network:
-`docker create network devteria-network`
+`docker network create devteria-network`
 ### Start MySQL in devteria-network
 `docker run --network devteria-network --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.36-debian`
 ### Run your application in devteria-network
