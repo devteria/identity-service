@@ -11,7 +11,7 @@
 	<groupId>com.devteria</groupId>
 	<artifactId>identity-service</artifactId>
 	<name>identity-service</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<description>Identity service</description>
 	<properties>
 		<java.version>21</java.version>
@@ -198,7 +198,7 @@
 					<execution>
 						<phase>compile</phase>
 						<goals>
-							<goal>apply</goal>
+							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
