@@ -21,6 +21,10 @@ This microservice is responsible for:
 `mvn clean package`
 
 ## Docker guideline
+### Build docker image
+`docker build -t <account>/identity-service:0.9.0 .`
+### Push docker image to Docker Hub
+`docker image push <account>/identity-service:0.9.0`
 ### Create network:
 `docker network create devteria-network`
 ### Start MySQL in devteria-network
