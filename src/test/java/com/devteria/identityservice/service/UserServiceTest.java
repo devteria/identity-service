@@ -8,12 +8,16 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.devteria.identityservice.constant.PredefinedRole;
+import com.devteria.identityservice.entity.Role;
+import com.devteria.identityservice.repository.RoleRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 
@@ -31,6 +35,8 @@ public class UserServiceTest {
 
     @MockBean
     private UserRepository userRepository;
+    @MockBean
+    private RoleRepository roleRepository;
 
     private UserCreationRequest request;
     private UserResponse userResponse;
@@ -71,6 +77,10 @@ public class UserServiceTest {
         // GIVEN
         when(userRepository.existsByUsername(anyString())).thenReturn(false);
         when(userRepository.save(any())).thenReturn(user);
+        when(roleRepository.findById(PredefinedRole.USER_ROLE))
+                .thenReturn(Optional.of(Role.builder()
+                        .name(PredefinedRole.USER_ROLE)
+                        .build()));
 
         // WHEN
         var response = userService.createUser(request);
@@ -83,7 +93,7 @@ public class UserServiceTest {
     @Test
     void createUser_userExisted_fail() {
         // GIVEN
-        when(userRepository.existsByUsername(anyString())).thenReturn(true);
+        when(userRepository.save(any())).thenThrow(new DataIntegrityViolationException("User existed"));
 
         // WHEN
         var exception = assertThrows(AppException.class, () -> userService.createUser(request));
